@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>7 Days of Love 💖</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Comic Sans MS',cursive;}
+
+body{
+  background:#ffe6ee;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+.container{
+  text-align:center;
+  max-width:90%;
+  position:relative;
+  z-index:2;
+}
+
+/* Curved text */
+svg{width:100%;height:120px;}
+.curve-text{fill:#c94a7c;font-size:28px;}
+
+/* Media */
+.couple{
+  width:260px;
+  margin:12px 0;
+  animation:float 1.2s infinite alternate;
+  border-radius:12px;
+  position:relative;
+  z-index:1;
+}
+
+video.couple{background:#000;}
+
+@keyframes float{
+  from{transform:translateY(0);}
+  to{transform:translateY(-10px);}
+}
+
+/* Buttons */
+button{
+  padding:10px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  margin:10px;
+  position:relative;
+  z-index:5;
+}
+
+#yes{background:#ff5c8a;color:white;}
+#no{background:#aaa;color:white;position:absolute;z-index:6;}
+
+/* Hearts */
+.heart{
+  position:fixed;
+  top:-10px;
+  color:#ff5c8a;
+  animation:fall linear infinite;
+  z-index:0;
+}
+
+@keyframes fall{
+  to{transform:translateY(110vh);}
+}
+
+/* Final text */
+.final{
+  text-align:center;
+  color:#c94a7c;
+  font-size:20px;
+  margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="app">
+
+<svg viewBox="0 0 500 150">
+  <path id="curve" d="M50,100 Q250,20 450,100" fill="transparent"/>
+  <text class="curve-text">
+    <textPath href="#curve">Ready for 7 days of love?</textPath>
+  </text>
+</svg>
+
+<video class="couple" src="day9.mp4" autoplay loop muted playsinline></video>
+
+<div>
+  <button id="yes">YES 💖</button>
+  <button id="no">NO 😈</button>
+</div>
+
+</div>
+
+<script>
+/* Floating hearts */
+setInterval(()=>{
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=2+Math.random()*3+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+},300);
+
+/* Naughty NO button */
+const noBtn=document.getElementById("no");
+noBtn.onmouseover=()=>{
+  noBtn.style.left=Math.random()*90+"vw";
+  noBtn.style.top=Math.random()*80+"vh";
+};
+
+let step=0;
+const app=document.getElementById("app");
+
+const days=[
+  {text:"Phool for my Fool 🌹",type:"video",src:"day1.mp4"},
+  {text:"Will you be mine? 💍",type:"video",src:"day2.mp4"},
+  {text:"Chocolate for you 🍫",type:"video",src:"day3.mp4"},
+  {text:"Happy teddy Day 🧸",type:"video",src:"day4.mp4"},
+  {text:"Happy Promise day 🤞🏻",type:"video",src:"day5.mp4"},
+  {text:"Kisses for you - Happy kiss day 💋",type:"video",src:"day6.mp4"},
+  {text:"Happy Valentine's day babyy 🤗❤️",type:"video",src:"day7.mp4"}
+];
+
+document.getElementById("yes").onclick=nextWish;
+
+function nextWish(){
+  if(step < days.length){
+
+    app.innerHTML=`
+      <svg viewBox="0 0 500 150">
+        <path id="curve" d="M50,100 Q250,20 450,100" fill="transparent"/>
+        <text class="curve-text">
+          <textPath href="#curve">${days[step].text}</textPath>
+        </text>
+      </svg>
+
+      <video class="couple" autoplay loop muted playsinline>
+        <source src="${days[step].src}" type="video/mp4">
+      </video>
+
+      <div style="cursor:pointer;color:#c94a7c;z-index:5;position:relative"
+           onclick="nextWish()">CLICK 💕</div>
+    `;
+    step++;
+
+  } else {
+
+    app.innerHTML=`
+      <svg viewBox="0 0 500 150">
+        <path id="curve" d="M40,100 Q250,30 460,100" fill="transparent"/>
+        <text class="curve-text">
+          <textPath href="#curve">Forever Yours ❤️</textPath>
+        </text>
+      </svg>
+
+      <video class="couple" src="day10.mp4" autoplay loop muted playsinline></video>
+
+      <div class="final">
+        I love you so much ❤️<br>
+        I’ll always be your safe place 😘
+      </div>
+    `;
+  }
+}
+</script>
+
+</body>
+</html>
+
